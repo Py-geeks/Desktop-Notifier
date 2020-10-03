@@ -1,14 +1,12 @@
 # Desktop-Notifier
 This is a simple desktop notifier made using python.
 
-### Pre-Requisites:
-- Requests: Requests is an elegant and simple HTTP library for Python, built for human beings.
-- xml.etree.ElementTree: etree.ElementTree module implements a simple and efficient API for parsing and creating XML data.
-
 ### Importing libraries:
-
-         import requests 
-         import xml.etree.ElementTree as ET 
+   
+         import feedparser
+         import notify2
+         import time
+         import os
   
 
          f = feedparser.parse("http://feeds.bbci.co.uk/news/rss.xml")
