@@ -1,71 +1,48 @@
 # Desktop-Notifier
 This is a simple desktop notifier made using python.
 
-### Pre-Requisites:
-- Requests: Requests is an elegant and simple HTTP library for Python, built for human beings.
-- xml.etree.ElementTree: etree.ElementTree module implements a simple and efficient API for parsing and creating XML data.
-
 ### Importing libraries:
-
-         import requests 
-         import xml.etree.ElementTree as ET 
+   
+         import feedparser
+         import notify2
+         import time
+         import os
   
-url of news rss feed 
 
-         RSS_FEED_URL = "http://www.hindustantimes.com/rss/topnews/rssfeed.xml"    
-  
-         def loadRSS():
+         f = feedparser.parse("http://feeds.bbci.co.uk/news/rss.xml")
          
-utility function to load RSS feed 
-create HTTP request response object 
+Here feedparser will parse the news data from the feed URL. The parsed data will be in the form of dictionary.
 
-             resp = requests.get(RSS_FEED_URL) 
-  
-return response content 
 
-             return resp.content 
-  
-         def parseXML(rss): 
+         ICON_PATH = os.getcwd() + "/icon.ico"
          
-utility function to parse XML format rss feed 
-create element tree root object 
+If you want to set any icon in the notification then here we are setting the Icon path. This is optional.
 
-             root = ET.fromstring(rss) 
-  
-Create empty list for news items 
 
-             newsitems = [] 
-  
-iterate news items 
+         notify2.init('News Notify')
+         
+Here we are initializing the notify2 using the init method of notify2. Initialize the D-Bus connection. Must be called before you send any notifications, or retrieve server info or capabilities.
+ 
+         for newsitem in f['items']: 
+                 n = notify2.Notification(newsitem['title'], 
+                                          newsitem['summary'], 
+                                          icon=ICON_PATH 
+                                          )
+                                          
+Looping from the parsed data to get the relevant information like news title, short summary and setting the notification icon using the Notification method of the notify2 lib.
 
-             for item in root.findall('./channel/item'): 
-                 news = {} 
-  
-iterate child elements of item 
+         n.set_urgency(notify2.URGENCY_NORMAL)
 
-                 for child in item: 
-  
-special checking for namespace object content:media
-            
-                     if child.tag == '{http://search.yahoo.com/mrss/}content': 
-                         news['media'] = child.attrib['url'] 
-                     else: 
-                         news[child.tag] = child.text.encode('utf8') 
-                 newsitems.append(news) 
-                 
-return news items list 
+Set the urgency level to one of URGENCY_LOW, URGENCY_NORMAL or URGENCY_CRITICAL
 
-             return newsitems 
-  
-         def topStories(): 
+         n.show()
 
-main function to generate and return news items 
+This method will show the notification on the Desktop
 
-load rss feed 
+         n.set_timeout(15000)
 
-             rss = loadRSS() 
+Setting the time to keep the notification on the desktop (in milliseconds). I have set here as 15 seconds.
 
-parse XML
-
-             newsitems = parseXML(rss) 
-             return newsitems 
+         time.sleep(1200)
+         
+This will usually display the news notification every 20 mins. You can set the time as per your requirement.
