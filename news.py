@@ -1,11 +1,9 @@
-
 import feedparser
 import notify2
 import time
 import os
 
-
-def Parsefeed():
+def parseFeed():
     f = feedparser.parse("http://feeds.bbci.co.uk/news/rss.xml")
     ICON_PATH = os.getcwd() + "/icon.ico"
     notify2.init('News Notify')
@@ -28,6 +26,6 @@ def Parsefeed():
 
 if __name__ == '__main__':
     try:
-        Parsefeed()
+        parseFeed()
     except:
-        print("Error")
+        print("Err")
