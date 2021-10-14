@@ -1,25 +1,17 @@
 #include<iostream>
-
-
 using namespace std;
-
-
 #define ll long long int
 
 class node{
 public:
 	int data;
 	node* next;
-
 	node(int d)
 	{
-		data =d;
-		next=NULL;
+		data = d;
+		next = NULL;
 	}
-
-
 };
-
 
 void insertathead(node*&head,int data)
 {
@@ -27,7 +19,6 @@ void insertathead(node*&head,int data)
 	n->next=head;
 	head=n;
 }
-
 
 void insertattail(node*&head,int data)
 {
@@ -45,8 +36,6 @@ void insertattail(node*&head,int data)
 	return;
 }
 
-
-
 //For finding length
 int len(node*head)
 {
@@ -59,11 +48,9 @@ int len(node*head)
 	return l;
 }
 
-
-
 void insertatmiddle(node*&head,int data,int p)
 {
-	if(head==NULL	||	p==0)
+	if(head==NULL || p==0)
 	{
 		insertathead(head,data);
 	}
@@ -87,7 +74,6 @@ void insertatmiddle(node*&head,int data,int p)
 	}
 }
 
-
 void deleteathead(node*&head)
 {
 	if(head==NULL)
@@ -99,7 +85,6 @@ void deleteathead(node*&head)
 	delete temp;
 	return;
 }
-
 
 void deleteattail(node*&head)
 {
@@ -129,7 +114,6 @@ bool searchrec(node*head,int key)
 		return(searchrec(head->next,key));
 
 }
-
 
 void print(node*head)
 {
@@ -255,7 +239,6 @@ node* merge_sort(node*head)
 
 }
 
-
 //Floyd's Cycle
 bool detectcycle(node*head)
 {
@@ -290,8 +273,6 @@ int main()
 	print(head);
 	cout<<endl;
 
-
-
 	cin>>p;
 
 	node*head2=NULL;
@@ -301,8 +282,6 @@ int main()
 	head=merge_sort(head);
 
 	print(head);
-
-
 
 return 0;
 }	
